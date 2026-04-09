@@ -1,0 +1,115 @@
+<div class="flex h-full">
+  <!-- Secondary Sidebar -->
+  <aside class="flex w-64 flex-col border-r border-gray-200 bg-white">
+    <div class="border-b border-gray-100 px-5 py-4">
+      <a routerLink="/touren" class="mb-3 inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-brand-500">
+        <lucide-icon [img]="ArrowLeft" [size]="14"></lucide-icon>
+        Alle Touren
+      </a>
+      <div class="text-base font-bold leading-tight text-gray-900">{{ tour().title }}</div>
+      <div class="mt-0.5 text-xs text-gray-500">{{ tour().objektId }}</div>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto px-3 py-4">
+      <ul class="space-y-0.5">
+        @for (s of sections; track s.key) {
+          <li>
+            <a
+              [class]="s.active
+                ? 'flex items-center gap-3 rounded-lg bg-brand-50 px-3 py-2 text-sm font-semibold text-brand-600'
+                : 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer'">
+              <lucide-icon [img]="s.icon" [size]="16"></lucide-icon>
+              {{ s.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <div class="mt-6 px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">KI-Funktionen</div>
+      <ul class="mt-2 space-y-0.5">
+        @for (s of aiSections; track s.key) {
+          <li>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer">
+              <lucide-icon [img]="s.icon" [size]="16"></lucide-icon>
+              <span class="flex-1">{{ s.label }}</span>
+              @if (s.beta) {
+                <span class="rounded-sm bg-brand-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-brand-700">Beta</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="border-t border-gray-100 p-4">
+      <a class="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+        <lucide-icon [img]="ExternalLink" [size]="14"></lucide-icon>
+        Tour im Browser ansehen
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="flex-1 overflow-auto">
+    <div class="mx-auto max-w-5xl px-10 py-8">
+      <!-- Breadcrumb header -->
+      <div class="mb-6 flex items-end justify-between">
+        <div>
+          <div class="text-xs font-medium uppercase tracking-wider text-brand-500">Editor · Upload</div>
+          <h1 class="mt-1 text-2xl font-bold text-gray-900">360° Aufnahmen hochladen</h1>
+          <p class="mt-1 text-sm text-gray-500">Laden Sie Ihre Panoramen hoch. Unterstützte Formate: JPG, PNG (max. 50 MB / Bild).</p>
+        </div>
+        <button class="inline-flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-brand-500/20 hover:bg-brand-600">
+          Speichern & Weiter
+        </button>
+      </div>
+
+      <!-- Dropzone -->
+      <div class="rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50/30 p-10 text-center transition hover:border-brand-400 hover:bg-brand-50/60">
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-card">
+          <lucide-icon [img]="CloudUpload" [size]="28" class="text-brand-500"></lucide-icon>
+        </div>
+        <div class="mt-4 text-base font-semibold text-gray-900">Dateien hier ablegen</div>
+        <div class="mt-1 text-sm text-gray-500">oder <span class="font-medium text-brand-500">durchsuchen Sie Ihren Computer</span></div>
+        <div class="mt-4 flex items-center justify-center gap-4 text-xs text-gray-400">
+          <span>JPG, PNG</span>
+          <span class="h-1 w-1 rounded-full bg-gray-300"></span>
+          <span>max. 50 MB</span>
+          <span class="h-1 w-1 rounded-full bg-gray-300"></span>
+          <span>bis zu 100 Bilder gleichzeitig</span>
+        </div>
+      </div>
+
+      <!-- Uploaded images -->
+      <div class="mt-8">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-base font-semibold text-gray-900">
+            Hochgeladene Aufnahmen
+            <span class="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">{{ images().length }}</span>
+          </h2>
+          <div class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+            <lucide-icon [img]="CircleCheck" [size]="14"></lucide-icon>
+            Alle erfolgreich hochgeladen
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          @for (img of images(); track img.name) {
+            <div class="group relative overflow-hidden rounded-xl bg-white shadow-card">
+              <div class="relative aspect-[4/3] w-full overflow-hidden">
+                <img [src]="img.thumb" [alt]="img.name" class="h-full w-full object-cover" />
+                <button class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/80">
+                  <lucide-icon [img]="X" [size]="14"></lucide-icon>
+                </button>
+              </div>
+              <div class="px-3 py-2">
+                <div class="truncate text-xs font-medium text-gray-900">{{ img.name }}</div>
+                <div class="text-[11px] text-gray-500">{{ img.size }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
