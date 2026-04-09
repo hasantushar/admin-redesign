@@ -1,0 +1,72 @@
+<div class="mx-auto max-w-7xl px-8 py-8">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <div class="text-xs font-medium uppercase tracking-wider text-brand-500">Dashboard</div>
+      <h1 class="mt-1 text-3xl font-bold text-gray-900">Willkommen zurück, Markus</h1>
+      <p class="mt-1 text-sm text-gray-500">Hier ist was es Neues bei FEELESTATE gibt.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <!-- Hero -->
+    <div class="lg:col-span-2">
+      <article class="overflow-hidden rounded-2xl bg-white shadow-card">
+        <div class="relative h-80 w-full overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&auto=format&fit=crop&q=70"
+            alt="Hero"
+            class="h-full w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-8 text-white">
+            <span class="inline-flex items-center rounded-full bg-brand-500 px-3 py-1 text-xs font-semibold uppercase tracking-wider">Release 4.2</span>
+            <h2 class="mt-3 max-w-xl text-3xl font-bold leading-tight">
+              Das neue FEELESTATE ist da — schneller, klarer, smarter.
+            </h2>
+            <p class="mt-2 max-w-xl text-sm text-white/80">
+              Überarbeitete Tourübersicht, beschleunigte Uploads und neue KI-Funktionen für Ihre 360°-Aufnahmen.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Quick stats -->
+      <div class="mt-6 grid grid-cols-3 gap-4">
+        <div class="rounded-xl bg-white p-5 shadow-card">
+          <div class="text-xs font-medium uppercase tracking-wider text-gray-500">Aktive Touren</div>
+          <div class="mt-2 text-3xl font-bold text-gray-900">47</div>
+          <div class="mt-1 text-xs text-emerald-600">+3 diese Woche</div>
+        </div>
+        <div class="rounded-xl bg-white p-5 shadow-card">
+          <div class="text-xs font-medium uppercase tracking-wider text-gray-500">Aufrufe</div>
+          <div class="mt-2 text-3xl font-bold text-gray-900">12.4k</div>
+          <div class="mt-1 text-xs text-emerald-600">+18% vs. Vormonat</div>
+        </div>
+        <div class="rounded-xl bg-white p-5 shadow-card">
+          <div class="text-xs font-medium uppercase tracking-wider text-gray-500">Speicher</div>
+          <div class="mt-2 text-3xl font-bold text-gray-900">68%</div>
+          <div class="mt-1 h-1.5 w-full rounded-full bg-gray-100">
+            <div class="h-full w-[68%] rounded-full bg-brand-500"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- News sidebar -->
+    <aside class="rounded-2xl bg-white p-6 shadow-card">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Neuigkeiten</h3>
+        <a class="text-xs font-medium text-brand-500 hover:text-brand-600 cursor-pointer">Alle anzeigen</a>
+      </div>
+
+      <ul class="divide-y divide-gray-100">
+        @for (item of news; track item.id) {
+          <li class="py-4 first:pt-0 last:pb-0">
+            <div class="text-xs text-gray-400">{{ item.date }}</div>
+            <h4 class="mt-1 text-sm font-semibold text-gray-900">{{ item.title }}</h4>
+            <p class="mt-1 text-xs leading-relaxed text-gray-600">{{ item.excerpt }}</p>
+          </li>
+        }
+      </ul>
+    </aside>
+  </div>
+</div>
