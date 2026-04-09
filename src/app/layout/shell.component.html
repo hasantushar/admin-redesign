@@ -1,0 +1,83 @@
+<div class="flex h-screen bg-[#f7f8fa]">
+  <!-- Primary Sidebar -->
+  <aside class="flex w-16 flex-col items-center justify-between bg-brand-500 py-4">
+    <div class="flex flex-col items-center gap-2">
+      <!-- Logo mark -->
+      <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 text-white font-bold">F</div>
+
+      <a
+        routerLink="/news"
+        routerLinkActive="bg-white/20"
+        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/90 hover:bg-white/10 transition"
+        title="News">
+        <lucide-icon [img]="Newspaper" [size]="20"></lucide-icon>
+      </a>
+      <a
+        routerLink="/touren"
+        routerLinkActive="bg-white/20"
+        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/90 hover:bg-white/10 transition"
+        title="Meine Touren">
+        <lucide-icon [img]="LayoutGrid" [size]="20"></lucide-icon>
+      </a>
+      <a
+        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer"
+        title="Kunden">
+        <lucide-icon [img]="Users" [size]="20"></lucide-icon>
+      </a>
+      <a
+        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer"
+        title="Statistik">
+        <lucide-icon [img]="ChartBar" [size]="20"></lucide-icon>
+      </a>
+    </div>
+
+    <div class="flex flex-col items-center gap-2">
+      <a class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer" title="Hilfe">
+        <lucide-icon [img]="CircleHelp" [size]="20"></lucide-icon>
+      </a>
+      <a class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer" title="Einstellungen">
+        <lucide-icon [img]="Settings" [size]="20"></lucide-icon>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Right pane -->
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Top Bar -->
+    <header class="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
+      <div class="flex items-center gap-3">
+        <div class="text-xl font-bold tracking-tight text-gray-900">
+          FEEL<span class="text-brand-500">ESTATE</span>
+        </div>
+      </div>
+
+      <div class="flex flex-1 justify-center px-8">
+        <div class="relative w-full max-w-md">
+          <lucide-icon [img]="Search" [size]="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></lucide-icon>
+          <input
+            type="text"
+            placeholder="Touren, Kunden, Objekte suchen…"
+            class="h-10 w-full rounded-lg border border-gray-200 bg-gray-50 pl-9 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100" />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100">
+          <lucide-icon [img]="Bell" [size]="18"></lucide-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div class="text-right leading-tight">
+            <div class="text-sm font-medium text-gray-900">Markus Weber</div>
+            <div class="text-xs text-gray-500">Immobilien Nord GmbH</div>
+          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">MW</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-auto">
+      <router-outlet />
+    </main>
+  </div>
+</div>
