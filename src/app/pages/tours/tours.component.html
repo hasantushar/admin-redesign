@@ -1,77 +1,192 @@
-<div class="mx-auto max-w-7xl px-8 py-8">
+<div class="mx-auto max-w-[1400px] px-8 py-8">
   <!-- Header -->
   <div class="mb-8 flex items-end justify-between">
     <div>
-      <div class="text-xs font-medium uppercase tracking-wider text-brand-500">Verwaltung</div>
-      <h1 class="mt-1 text-3xl font-bold text-gray-900">Meine Touren</h1>
-      <p class="mt-1 text-sm text-gray-500">{{ tours.length }} Touren · Zuletzt aktualisiert heute</p>
+      <h1 class="text-2xl font-bold text-gray-900">Meine Touren</h1>
+      <p class="mt-1 text-sm text-gray-500">{{ tours.length }} Touren in Ihrem Konto</p>
     </div>
 
     <div class="flex items-center gap-2">
-      <button class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-        <lucide-icon [img]="Filter" [size]="16"></lucide-icon>
+      <!-- Search inline -->
+      <div class="relative">
+        <lucide-icon [img]="Search" [size]="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></lucide-icon>
+        <input
+          type="text"
+          placeholder="Tour suchen…"
+          class="h-9 w-48 rounded-lg border border-gray-200 bg-white pl-8 pr-3 text-sm placeholder:text-gray-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100 transition" />
+      </div>
+
+      <button class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-[13px] font-medium text-gray-600 shadow-sm hover:bg-gray-50 transition">
+        <lucide-icon [img]="Filter" [size]="14"></lucide-icon>
         Filter
       </button>
-      <button class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-        <lucide-icon [img]="ArrowUpDown" [size]="16"></lucide-icon>
+      <button class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-[13px] font-medium text-gray-600 shadow-sm hover:bg-gray-50 transition">
+        <lucide-icon [img]="ArrowUpDown" [size]="14"></lucide-icon>
         Sortieren
       </button>
+
+      <!-- View toggle -->
+      <div class="flex rounded-lg border border-gray-200 bg-white p-0.5 shadow-sm">
+        <button
+          (click)="viewMode.set('grid')"
+          [class]="viewMode() === 'grid'
+            ? 'flex h-8 w-8 items-center justify-center rounded-md bg-brand-500 text-white transition'
+            : 'flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:text-gray-600 transition'">
+          <lucide-icon [img]="LayoutGrid" [size]="14"></lucide-icon>
+        </button>
+        <button
+          (click)="viewMode.set('list')"
+          [class]="viewMode() === 'list'
+            ? 'flex h-8 w-8 items-center justify-center rounded-md bg-brand-500 text-white transition'
+            : 'flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:text-gray-600 transition'">
+          <lucide-icon [img]="List" [size]="14"></lucide-icon>
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Grid -->
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    <!-- New tour card -->
-    <button class="group flex min-h-[280px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-white/50 p-6 transition hover:border-brand-400 hover:bg-brand-50/40">
-      <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500 text-white shadow-lg shadow-brand-500/30 transition group-hover:scale-105">
-        <lucide-icon [img]="Plus" [size]="24"></lucide-icon>
-      </div>
-      <div class="mt-4 text-base font-semibold text-gray-900">Neue Tour erstellen</div>
-      <div class="mt-1 text-xs text-gray-500">360°-Aufnahmen hochladen</div>
-    </button>
+  <!-- Grid View -->
+  @if (viewMode() === 'grid') {
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <!-- New tour card -->
+      <button class="group flex min-h-[340px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-white/40 p-6 transition hover:border-brand-300 hover:bg-brand-50/30">
+        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-lg shadow-brand-500/25 transition group-hover:scale-110 group-hover:shadow-glow animate-pulse-slow">
+          <lucide-icon [img]="Plus" [size]="26"></lucide-icon>
+        </div>
+        <div class="mt-5 text-[15px] font-bold text-gray-900">Neue Tour erstellen</div>
+        <div class="mt-1 text-xs text-gray-500">360°-Aufnahmen hochladen</div>
+      </button>
 
-    @for (tour of tours; track tour.id) {
-      <a
-        [routerLink]="['/editor', tour.id]"
-        class="group overflow-hidden rounded-2xl bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
-        <div class="relative h-44 w-full overflow-hidden bg-gray-100">
-          <img [src]="tour.image" [alt]="tour.title" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
-          <div class="absolute left-3 top-3">
-            @if (tour.public) {
-              <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/95 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                <lucide-icon [img]="Globe" [size]="12"></lucide-icon>
-                Öffentlich
-              </span>
-            } @else {
-              <span class="inline-flex items-center gap-1 rounded-full bg-gray-900/85 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                <lucide-icon [img]="Lock" [size]="12"></lucide-icon>
-                Privat
-              </span>
-            }
+      @for (tour of tours; track tour.id) {
+        <div class="group relative overflow-hidden rounded-2xl bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover">
+          <!-- Image -->
+          <a [routerLink]="['/editor', tour.id]" class="relative block h-48 w-full overflow-hidden bg-gray-100">
+            <img [src]="tour.image" [alt]="tour.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            <!-- Gradient overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
+
+            <!-- Status badge -->
+            <div class="absolute left-3 top-3">
+              @if (tour.public) {
+                <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-500/90 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm">
+                  <lucide-icon [img]="Globe" [size]="11"></lucide-icon>
+                  Öffentlich
+                </span>
+              } @else {
+                <span class="inline-flex items-center gap-1 rounded-lg bg-gray-900/70 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm">
+                  <lucide-icon [img]="Lock" [size]="11"></lucide-icon>
+                  Privat
+                </span>
+              }
+            </div>
+
+            <!-- Hover action row -->
+            <div class="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-xl bg-white/90 px-2 py-1.5 shadow-lg opacity-0 translate-y-2 transition duration-300 group-hover:opacity-100 group-hover:translate-y-0 backdrop-blur-sm">
+              <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" title="Bearbeiten">
+                <lucide-icon [img]="Pencil" [size]="14"></lucide-icon>
+              </button>
+              <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition" title="Vorschau">
+                <lucide-icon [img]="Eye" [size]="14"></lucide-icon>
+              </button>
+              <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 hover:bg-violet-50 hover:text-violet-600 transition" title="Teilen">
+                <lucide-icon [img]="Share2" [size]="14"></lucide-icon>
+              </button>
+              <div class="mx-0.5 h-5 w-px bg-gray-200"></div>
+              <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition" title="Löschen">
+                <lucide-icon [img]="Trash2" [size]="14"></lucide-icon>
+              </button>
+            </div>
+          </a>
+
+          <!-- Info -->
+          <div class="p-5">
+            <a [routerLink]="['/editor', tour.id]" class="block">
+              <h3 class="truncate text-[15px] font-bold text-gray-900 group-hover:text-brand-600 transition">{{ tour.title }}</h3>
+            </a>
+            <dl class="mt-3 space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <dt class="text-gray-400">Objekt ID</dt>
+                <dd class="rounded-md bg-gray-50 px-2 py-0.5 font-mono text-[11px] font-medium text-gray-600">{{ tour.objektId }}</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-gray-400">Ansprechpartner</dt>
+                <dd class="font-medium text-gray-700">{{ tour.ansprechpartner }}</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-gray-400">Team Mitglied</dt>
+                <dd class="font-medium text-gray-700">{{ tour.teamMitglied }}</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-gray-400">Erstellt am</dt>
+                <dd class="font-medium text-gray-700">{{ tour.erstelltAm }}</dd>
+              </div>
+            </dl>
           </div>
         </div>
-        <div class="p-5">
-          <h3 class="truncate text-base font-semibold text-gray-900 group-hover:text-brand-600">{{ tour.title }}</h3>
-          <dl class="mt-3 space-y-1.5 text-xs">
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Objekt ID</dt>
-              <dd class="font-medium text-gray-700">{{ tour.objektId }}</dd>
-            </div>
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Ansprechpartner</dt>
-              <dd class="font-medium text-gray-700">{{ tour.ansprechpartner }}</dd>
-            </div>
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Team Mitglied</dt>
-              <dd class="font-medium text-gray-700">{{ tour.teamMitglied }}</dd>
-            </div>
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Erstellt am</dt>
-              <dd class="font-medium text-gray-700">{{ tour.erstelltAm }}</dd>
-            </div>
-          </dl>
-        </div>
-      </a>
-    }
-  </div>
+      }
+    </div>
+  }
+
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    <div class="overflow-hidden rounded-2xl bg-white shadow-card">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-gray-100 text-left">
+            <th class="px-6 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Tour</th>
+            <th class="px-4 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Objekt ID</th>
+            <th class="px-4 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Ansprechpartner</th>
+            <th class="px-4 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Team</th>
+            <th class="px-4 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Status</th>
+            <th class="px-4 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Erstellt</th>
+            <th class="px-4 py-3.5"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          @for (tour of tours; track tour.id) {
+            <tr class="group transition hover:bg-gray-50/60 cursor-pointer">
+              <td class="px-6 py-3">
+                <a [routerLink]="['/editor', tour.id]" class="flex items-center gap-3">
+                  <img [src]="tour.image" [alt]="tour.title" class="h-10 w-14 rounded-lg object-cover" />
+                  <span class="text-sm font-semibold text-gray-900 group-hover:text-brand-600 transition">{{ tour.title }}</span>
+                </a>
+              </td>
+              <td class="px-4 py-3">
+                <span class="rounded-md bg-gray-50 px-2 py-0.5 font-mono text-[11px] font-medium text-gray-600">{{ tour.objektId }}</span>
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-600">{{ tour.ansprechpartner }}</td>
+              <td class="px-4 py-3 text-sm text-gray-600">{{ tour.teamMitglied }}</td>
+              <td class="px-4 py-3">
+                @if (tour.public) {
+                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-600">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                    Öffentlich
+                  </span>
+                } @else {
+                  <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-semibold text-gray-500">
+                    <span class="h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                    Privat
+                  </span>
+                }
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-500">{{ tour.erstelltAm }}</td>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                  <button class="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-brand-50 hover:text-brand-600 transition">
+                    <lucide-icon [img]="Pencil" [size]="13"></lucide-icon>
+                  </button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition">
+                    <lucide-icon [img]="Eye" [size]="13"></lucide-icon>
+                  </button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-red-50 hover:text-red-500 transition">
+                    <lucide-icon [img]="Trash2" [size]="13"></lucide-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

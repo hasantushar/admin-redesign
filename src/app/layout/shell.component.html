@@ -1,82 +1,195 @@
-<div class="flex h-screen bg-[#f7f8fa]">
-  <!-- Primary Sidebar -->
-  <aside class="flex w-16 flex-col items-center justify-between bg-brand-500 py-4">
-    <div class="flex flex-col items-center gap-2">
-      <!-- Logo mark -->
-      <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 text-white font-bold">F</div>
+<div class="flex h-screen overflow-hidden">
+  <!-- Dark Sidebar -->
+  <aside
+    [class]="collapsed()
+      ? 'flex w-[72px] flex-col bg-navy-900 transition-all duration-300 ease-in-out'
+      : 'flex w-[230px] flex-col bg-navy-900 transition-all duration-300 ease-in-out'">
 
-      <a
-        routerLink="/news"
-        routerLinkActive="bg-white/20"
-        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/90 hover:bg-white/10 transition"
-        title="News">
-        <lucide-icon [img]="Newspaper" [size]="20"></lucide-icon>
-      </a>
-      <a
-        routerLink="/touren"
-        routerLinkActive="bg-white/20"
-        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/90 hover:bg-white/10 transition"
-        title="Meine Touren">
-        <lucide-icon [img]="LayoutGrid" [size]="20"></lucide-icon>
-      </a>
-      <a
-        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer"
-        title="Kunden">
-        <lucide-icon [img]="Users" [size]="20"></lucide-icon>
-      </a>
-      <a
-        class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer"
-        title="Statistik">
-        <lucide-icon [img]="ChartBar" [size]="20"></lucide-icon>
-      </a>
+    <!-- Logo area -->
+    <div class="flex h-16 items-center gap-3 border-b border-white/[0.06] px-4">
+      <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-sm font-extrabold text-white shadow-lg shadow-brand-500/20">
+        F
+      </div>
+      @if (!collapsed()) {
+        <div class="overflow-hidden">
+          <div class="text-[15px] font-bold tracking-tight text-white">
+            FEEL<span class="text-brand-400">ESTATE</span>
+          </div>
+          <div class="text-[10px] font-medium text-white/30 tracking-wide">Admin Panel</div>
+        </div>
+      }
     </div>
 
-    <div class="flex flex-col items-center gap-2">
-      <a class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer" title="Hilfe">
-        <lucide-icon [img]="CircleHelp" [size]="20"></lucide-icon>
-      </a>
-      <a class="flex h-11 w-11 items-center justify-center rounded-lg text-white/60 hover:bg-white/10 transition cursor-pointer" title="Einstellungen">
-        <lucide-icon [img]="Settings" [size]="20"></lucide-icon>
-      </a>
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto sidebar-scroll px-3 py-4">
+      @if (!collapsed()) {
+        <div class="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25">Navigation</div>
+      }
+
+      <ul class="space-y-1">
+        <li>
+          <a
+            routerLink="/news"
+            routerLinkActive="active-nav"
+            [class]="collapsed()
+              ? 'nav-item-collapsed'
+              : 'nav-item'"
+            title="News">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="Newspaper" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>News</span>
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/touren"
+            routerLinkActive="active-nav"
+            [class]="collapsed()
+              ? 'nav-item-collapsed'
+              : 'nav-item'"
+            title="Meine Touren">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="LayoutGrid" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>Meine Touren</span>
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            [class]="collapsed()
+              ? 'nav-item-collapsed opacity-50'
+              : 'nav-item opacity-50'"
+            title="Kunden">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="Users" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>Kunden</span>
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            [class]="collapsed()
+              ? 'nav-item-collapsed opacity-50'
+              : 'nav-item opacity-50'"
+            title="Statistik">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="ChartBar" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>Statistik</span>
+            }
+          </a>
+        </li>
+      </ul>
+
+      @if (!collapsed()) {
+        <div class="mb-2 mt-8 px-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25">System</div>
+      } @else {
+        <div class="my-6 mx-auto w-6 border-t border-white/[0.06]"></div>
+      }
+
+      <ul class="space-y-1">
+        <li>
+          <a
+            [class]="collapsed()
+              ? 'nav-item-collapsed opacity-50'
+              : 'nav-item opacity-50'"
+            title="Hilfe">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="CircleHelp" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>Hilfe & Support</span>
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            [class]="collapsed()
+              ? 'nav-item-collapsed opacity-50'
+              : 'nav-item opacity-50'"
+            title="Einstellungen">
+            <div class="nav-icon-wrap">
+              <lucide-icon [img]="Settings" [size]="18"></lucide-icon>
+            </div>
+            @if (!collapsed()) {
+              <span>Einstellungen</span>
+            }
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Collapse toggle + user -->
+    <div class="border-t border-white/[0.06] p-3">
+      @if (!collapsed()) {
+        <div class="mb-3 flex items-center gap-3 rounded-xl bg-white/[0.04] px-3 py-2.5">
+          <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 text-xs font-bold text-white">MW</div>
+          <div class="min-w-0 flex-1">
+            <div class="truncate text-[13px] font-semibold text-white/90">Markus Weber</div>
+            <div class="truncate text-[11px] text-white/35">Immobilien Nord</div>
+          </div>
+          <button class="flex h-7 w-7 items-center justify-center rounded-lg text-white/25 hover:bg-white/[0.06] hover:text-white/50 transition">
+            <lucide-icon [img]="LogOut" [size]="14"></lucide-icon>
+          </button>
+        </div>
+      }
+
+      <button
+        (click)="toggleSidebar()"
+        class="flex w-full items-center justify-center gap-2 rounded-lg py-2 text-white/30 hover:bg-white/[0.04] hover:text-white/50 transition"
+        title="Sidebar ein-/ausblenden">
+        <lucide-icon
+          [img]="ChevronLeft"
+          [size]="16"
+          [class]="collapsed() ? 'rotate-180 transition-transform duration-300' : 'transition-transform duration-300'">
+        </lucide-icon>
+      </button>
     </div>
   </aside>
 
   <!-- Right pane -->
   <div class="flex flex-1 flex-col overflow-hidden">
-    <!-- Top Bar -->
-    <header class="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
-      <div class="flex items-center gap-3">
-        <div class="text-xl font-bold tracking-tight text-gray-900">
-          FEEL<span class="text-brand-500">ESTATE</span>
-        </div>
-      </div>
-
-      <div class="flex flex-1 justify-center px-8">
-        <div class="relative w-full max-w-md">
-          <lucide-icon [img]="Search" [size]="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></lucide-icon>
+    <!-- Glassmorphism Top Bar -->
+    <header class="glass sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200/60 px-6">
+      <div class="flex flex-1 items-center gap-6">
+        <div class="relative w-full max-w-sm">
+          <lucide-icon [img]="Search" [size]="15" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></lucide-icon>
           <input
             type="text"
-            placeholder="Touren, Kunden, Objekte suchen…"
-            class="h-10 w-full rounded-lg border border-gray-200 bg-gray-50 pl-9 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100" />
+            placeholder="Suchen…"
+            class="h-10 w-full rounded-xl border-0 bg-gray-100/80 pl-10 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition" />
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <button class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100">
+      <div class="flex items-center gap-2">
+        <button class="relative flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 hover:bg-gray-100/80 transition">
           <lucide-icon [img]="Bell" [size]="18"></lucide-icon>
+          <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-brand-500 ring-2 ring-white"></span>
         </button>
-        <div class="flex items-center gap-3">
+        <button class="flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 hover:bg-gray-100/80 transition">
+          <lucide-icon [img]="Moon" [size]="18"></lucide-icon>
+        </button>
+        <div class="ml-2 h-6 w-px bg-gray-200"></div>
+        <div class="ml-2 flex items-center gap-3">
           <div class="text-right leading-tight">
-            <div class="text-sm font-medium text-gray-900">Markus Weber</div>
-            <div class="text-xs text-gray-500">Immobilien Nord GmbH</div>
+            <div class="text-sm font-semibold text-gray-900">Markus Weber</div>
+            <div class="text-[11px] text-gray-500">Immobilien Nord GmbH</div>
           </div>
-          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">MW</div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-sm font-bold text-white shadow-md shadow-brand-500/15">MW</div>
         </div>
       </div>
     </header>
 
     <!-- Page content -->
-    <main class="flex-1 overflow-auto">
+    <main class="mesh-bg flex-1 overflow-auto">
       <router-outlet />
     </main>
   </div>

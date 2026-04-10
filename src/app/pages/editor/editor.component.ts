@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   LucideAngularModule,
@@ -22,6 +23,9 @@ import {
   CloudUpload,
   CircleCheck,
   X,
+  GripVertical,
+  Maximize2,
+  Check,
 } from 'lucide-angular';
 import { TOURS } from '../../data/mock';
 
@@ -34,7 +38,7 @@ interface UploadedImage {
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [RouterLink, LucideAngularModule],
+  imports: [RouterLink, LucideAngularModule, DecimalPipe],
   templateUrl: './editor.component.html',
 })
 export class EditorComponent {
@@ -43,18 +47,18 @@ export class EditorComponent {
   readonly tour = computed(() => TOURS.find((t) => t.id === this.tourId()) ?? TOURS[0]);
 
   readonly sections = [
-    { key: 'settings', label: 'Toureinstellungen', icon: Settings2 },
-    { key: 'upload', label: 'Upload', icon: Upload, active: true },
-    { key: 'sort', label: 'Sortieren', icon: ArrowUpDown },
-    { key: 'pixelate', label: 'Verpixeln', icon: EyeOff },
-    { key: 'areas', label: 'Bereiche', icon: Layers },
-    { key: 'floorplans', label: 'Grundrisspläne', icon: Map },
-    { key: 'info', label: 'Info-Inhalte', icon: Info },
-    { key: 'link', label: 'Verknüpfen', icon: Link2 },
-    { key: 'share', label: 'Freigabe', icon: Share2 },
-    { key: 'customers', label: 'Kundenverwaltung', icon: UserCog },
-    { key: 'publish', label: 'Veröffentlichen', icon: Rocket },
-    { key: 'visibility', label: 'Sichtbeschränkung', icon: EyeClosed },
+    { key: 'settings', label: 'Toureinstellungen', icon: Settings2, step: 1 },
+    { key: 'upload', label: 'Upload', icon: Upload, step: 2, active: true },
+    { key: 'sort', label: 'Sortieren', icon: ArrowUpDown, step: 3 },
+    { key: 'pixelate', label: 'Verpixeln', icon: EyeOff, step: 4 },
+    { key: 'areas', label: 'Bereiche', icon: Layers, step: 5 },
+    { key: 'floorplans', label: 'Grundrisspläne', icon: Map, step: 6 },
+    { key: 'info', label: 'Info-Inhalte', icon: Info, step: 7 },
+    { key: 'link', label: 'Verknüpfen', icon: Link2, step: 8 },
+    { key: 'share', label: 'Freigabe', icon: Share2, step: 9 },
+    { key: 'customers', label: 'Kundenverwaltung', icon: UserCog, step: 10 },
+    { key: 'publish', label: 'Veröffentlichen', icon: Rocket, step: 11 },
+    { key: 'visibility', label: 'Sichtbeschränkung', icon: EyeClosed, step: 12 },
   ];
 
   readonly aiSections = [
@@ -62,6 +66,8 @@ export class EditorComponent {
     { key: 'floorplan-ai', label: 'AI Grundriss', icon: Sparkles, beta: true },
     { key: 'enhance', label: 'KI-Bildverbesserung', icon: WandSparkles, beta: true },
   ];
+
+  readonly currentStep = 2; // Upload is step 2
 
   readonly images = signal<UploadedImage[]>([
     { name: 'wohnzimmer_01.jpg', thumb: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=400&auto=format&fit=crop&q=60', size: '8.4 MB' },
@@ -77,4 +83,7 @@ export class EditorComponent {
   readonly CloudUpload = CloudUpload;
   readonly CircleCheck = CircleCheck;
   readonly X = X;
+  readonly GripVertical = GripVertical;
+  readonly Maximize2 = Maximize2;
+  readonly Check = Check;
 }
